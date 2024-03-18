@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}
+    New Document
+{% endblock %}
+
+{% block main %}
+    <div>
+        New Document
+    </div>
+    <form method="POST" novalidate enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" name="document-create-save" value="Save">
+        <input type="submit" name="document-create-cancel" value="Cancel">
+    </form>
+{% endblock %}

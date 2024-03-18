@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}
+    Documents
+{% endblock %}
+{% block main %}
+    <div class="document-list">
+        <p><a href="{% url 'documents:create-document' %}">Add Document</a></p>
+        <br>
+        {% if not object_list %}
+            <p>You have no Documents yet!</p>
+        {% else %}
+            {% for document in object_list %}
+                <div class=document-list__row>
+                    <p><a href="{% url 'documents:show-document' document.pk %}" target="_blank"> {{ document }}</a>></p>
+                    <form method="POST" action="{% url "documents:delete-document" document.pk %}">
+                        {% csrf_token %}
+                        <input type="submit" value="DELETE">
+                    </form>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}

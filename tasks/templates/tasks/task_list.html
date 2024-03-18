@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}
+    List of tasks
+{% endblock %}
+{% block main %}
+    <div class="task-list">
+        <p>I will be using postgres.</p>
+        <p>Your Tasks! <a href="{% url "tasks:task-create" %}">Create</a></p>
+        {% for task in task_list %}
+            <div class=task-list__row>
+                <p>{{ task.text }} </p>
+                <form method="POST" action="{% url "tasks:task-delete" task.pk %}">
+                    {% csrf_token %}
+                    <input type="submit" value="DELETE">
+                </form>
+            </div>
+        {% endfor %}
+        <div>If the background does not have a disgusting color, it means that your css was not found! The only purpose
+            of using css here is to make sure that the static files are found. It will look hideous anyway.
+        </div>
+    </div>
+{% endblock %}
