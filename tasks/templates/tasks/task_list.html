@@ -4,7 +4,7 @@
 {% endblock %}
 {% block main %}
     <div class="task-list">
-        <p>I will be using postgres.</p>
+        <p>I am using postgres.</p>
         <p>Your Tasks! <a href="{% url "tasks:task-create" %}">Create</a></p>
         {% for task in task_list %}
             <div class=task-list__row>

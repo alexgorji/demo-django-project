@@ -9,17 +9,20 @@ html, body {
     height: 100%;
 }
 
+body {
+    background: antiquewhite;
+    margin: 1em 1em 1em 1em;
+}
 
 p {
     margin: 0 10px 0 0
 }
 
-.task-list{
-    background: antiquewhite;
-    padding: 1em 1em 1em 1em;
+.main {
     height: 100%;
 }
-.task-list__row{
+
+.task-list__row {
     display: flex;
     margin: 0.5em 0 0.5em 0;
 }
