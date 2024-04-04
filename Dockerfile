@@ -3,6 +3,7 @@ FROM python:3.11.8-slim-bullseye
 
 WORKDIR /var/www/app/
 RUN mkdir /var/www/app/staticfiles
+RUN mkdir -p /var/www/app/backup/files
 
 # set environmental variables
 # If given, Python won’t try to write .pyc files on the import of source modules.
