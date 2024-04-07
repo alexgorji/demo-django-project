@@ -19,16 +19,13 @@ class DocumentCreateView(generic.CreateView):
         return reverse_lazy('documents:list-document')
 
     def post(self, request, *args, **kwargs):
-        if 'document-create-cancel' in request.POST:
-            return redirect(self.success_url)
+        files = request.FILES.getlist('file')
+        for index, file in enumerate(files[:-1]):
+            Document.objects.create(file=file)
+        if 'document-create-save' in request.POST:
+            return super().post(request, *args, **kwargs)
         else:
-            files = request.FILES.getlist('file')
-            for index, file in enumerate(files[:-1]):
-                Document.objects.create(file=file)
-            if 'document-create-save' in request.POST:
-                return super().post(request, *args, **kwargs)
-            else:
-                raise ValueError()
+            raise ValueError()
 
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
