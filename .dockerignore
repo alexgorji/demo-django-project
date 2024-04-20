@@ -1,0 +1,5 @@
+.github
+Dockerfile
+.venv
+db.sqlite3
+protected

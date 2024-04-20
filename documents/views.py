@@ -1,4 +1,5 @@
 import re
+from pathlib import Path
 
 from django.forms import ClearableFileInput
 from django.http import HttpResponse
@@ -38,11 +39,30 @@ class DocumentListView(generic.ListView):
     model = Document
 
 
+def remove_file_and_parent_if_empty(path):
+    if isinstance(path, str):
+        path = Path(path)
+    parent = path.parent
+    try:
+        Path.rmdir(path)
+        remove_file_and_parent_if_empty(parent)
+    except NotADirectoryError:
+        Path.unlink(path)
+        remove_file_and_parent_if_empty(parent)
+    except OSError:
+        pass
+
+
 class DocumentDeleteView(generic.DeleteView):
     model = Document
 
     def get_success_url(self):
         return reverse_lazy('documents:list-document')
+
+    def dispatch(self, request, *args, **kwargs):
+        print('Removing file', self.get_object().file.path)
+        remove_file_and_parent_if_empty(self.get_object().file.path)
+        return super().dispatch(request, *args, **kwargs)
 
 
 def show_document_file(request, pk):
