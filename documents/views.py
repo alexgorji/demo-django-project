@@ -67,12 +67,8 @@ class DocumentDeleteView(generic.DeleteView):
 
 def show_document_file(request, pk):
     document = get_object_or_404(Document, pk=pk)
-    request_url = request.build_absolute_uri()
-    domain = re.search(r"//(.*?)/", request_url).group(1)
-    if domain.startswith('localhost') or domain.startswith('127.0.0.1'):
-        return serve(request, path=document.file.url, document_root='')
-    else:
-        response = HttpResponse(status=200)
-        response['Content-Type'] = ''
-        response['X-Accel-Redirect'] = f"{document.file.url}"
+    response = HttpResponse(status=200)
+    response['Content-Type'] = ''
+    response['X-Accel-Redirect'] = f"{document.file.url}"
     return response
+
